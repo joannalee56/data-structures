@@ -17,9 +17,7 @@ def all_species(filename):
     file = open(filename)
 
     for line in file:
-      line = line.rstrip()
-      villager_info = line.split('|')
-      species.add(villager_info[1])
+      species = line.rstrip().split('|')[1]
 
     file.close()
 
@@ -47,7 +45,7 @@ def get_villagers_by_species(filename, species="All"):
       villager_info = line.split('|')
       
       if species == villager_info[1] or species == 'All':
-        villagers.append(villager_info[0])#name
+        villagers.append(villager_info[0]) # name
 
     file.close()
 
@@ -161,6 +159,7 @@ def find_likeminded_villagers(filename, name):
     """Return a set of villagers with the same personality as the given villager."""
 
     villager_personality = set()
+    personality = None
     file_data = []
     file = open(filename)
 
@@ -172,6 +171,7 @@ def find_likeminded_villagers(filename, name):
 
       if name in villager_info:
         personality = villager_info[2]
+        break
     
     file.close()
     
@@ -183,9 +183,10 @@ def find_likeminded_villagers(filename, name):
         # if personality == villager_info[2]:
         #   villager_personality.add(villager_info[0])
     
-    for data in file_data:
-      if personality == data[2]:
-          villager_personality.add(data[0])
+    if personality:
+      for data in file_data:
+        if personality == data[2]:
+            villager_personality.add(data[0])
 
     
 
